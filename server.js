@@ -5,22 +5,48 @@ var path = require('path');
 var app = express();
 app.use(morgan('combined'));
 
-var articleOne={
-    title:' Article One | Rajamani',
-    heading: 'Article One',
-    date:'8th Aug, 2017',
-    content:`
+var articles ={
+    'article-one': {
+        title:'Article One | Rajamani',
+        heading: 'Article One',
+        date:'8th Aug, 2017',
+        content:`
+                    <p>
+                        This is the content of my first article. This is the content of my first article. This is the content of my first article. This is the content of my first article. This is the content of my first article. This is the content of my first article. This is the content of my first article.
+                    </p>
+                    
+                    <p>
+                        This is the content of my first article. This is the content of my first article. This is the content of my first article. This is the content of my first article. This is the content of my first article. This is the content of my first article. This is the content of my first article.
+                    </p>
+                    
+                    <p>
+                        This is the content of my first article. This is the content of my first article. This is the content of my first article. This is the content of my first article. This is the content of my first article. This is the content of my first article. This is the content of my first article.
+                `
+    },
+    'article-two':{
+        title:'Article Two | Rajamani',
+        heading: 'Article Two',
+        date:'9th Aug, 2017',
+        content:`
                 <p>
-                    This is the content of my first article. This is the content of my first article. This is the content of my first article. This is the content of my first article. This is the content of my first article. This is the content of my first article. This is the content of my first article.
+                    This is the content of my second article. This is the content of my second article. This is the content of my second article. 
                 </p>
                 
                 <p>
-                    This is the content of my first article. This is the content of my first article. This is the content of my first article. This is the content of my first article. This is the content of my first article. This is the content of my first article. This is the content of my first article.
+                    This is the content of my second article. This is the content of my second article. This is the content of my second article. 
                 </p>
-                
+                `
+    },
+    'article-three':{
+        title:'Article Three | Rajamani',
+        heading: 'Article Three',
+        date:'10th Aug, 2017',
+        content:`
                 <p>
-                    This is the content of my first article. This is the content of my first article. This is the content of my first article. This is the content of my first article. This is the content of my first article. This is the content of my first article. This is the content of my first article.
-            `
+                    This is the content of my Third article. 
+                </p>
+                `
+    }
 };
 
 function createTemplate (data){
@@ -63,20 +89,24 @@ app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname, 'ui', 'index.html'));
 });
 
-app.get('/article-one',function(req,res){
+//app.get('/article-one',function(req,res){
 //    res.sendfile(path.join(__dirname, 'ui', 'article-one.html'));
 //    res.sendfile('article-one.html');
-        res.send(createTemplate(articleOne));
+
+app.get('/:articleName',function(req,res){
+//        res.send(createTemplate(articleOne));
+        var articleName = req.params.articleName;
+        res.send(createTemplate(articles[articleName]));
 });
 
-app.get('/article-two',function(req,res){
+//app.get('/article-two',function(req,res){
 //    res.send('Article two requested and will be served here');
-    res.sendfile(path.join(__dirname, 'ui', 'article-two.html'));
-});
+//    res.sendfile(path.join(__dirname, 'ui', 'article-two.html'));
+//});
 
-app.get('/article-three',function(req,res){
-    res.sendfile(path.join(__dirname, 'ui', 'article.three.html'));
-});
+//app.get('/article-three',function(req,res){
+//    res.sendfile(path.join(__dirname, 'ui', 'article.three.html'));
+//});
 
 app.get('/ui/style.css', function (req, res) {
   res.sendFile(path.join(__dirname, 'ui', 'style.css'));
